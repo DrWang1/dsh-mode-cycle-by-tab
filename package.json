@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-mode-cycle",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Tab and Shift+Tab cycle composer modes (normal <-> plan) in the DSH Web composer, matching opencode's agent_cycle — switching through the official /plan handler directly, so no command row reaches the transcript.",
   "type": "module",
   "exports": {

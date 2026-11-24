@@ -141,12 +141,17 @@ dsh plugin --profile desktop add /path/to/dsh-plugin-mode-cycle
 dsh plugin --profile desktop add github:DrWang1/dsh-plugin-mode-cycle
 dsh plugin --profile desktop add github:DrWang1/dsh-plugin-mode-cycle#v0.3.0
 
-# npm（若已发布到 npm）
+# npm（已发布到 npm）
 dsh plugin --profile desktop add dsh-plugin-mode-cycle
+
+# GitHub Release 预构建包（插件市场同源；升级走新 tag）
+dsh plugin --profile desktop add https://github.com/DrWang1/dsh-plugin-mode-cycle/releases/latest/download/dsh-plugin-mode-cycle.tgz
 
 # 回滚
 dsh plugin --profile desktop remove dsh-plugin-mode-cycle
 ```
+
+插件市场（设置 → 插件 → 插件市场）里搜 `mode-cycle` 也能装，条目与上面这个 Release 包同源。
 
 该命令会把包装进 profile 的 `node_modules` 并追加到 `dsh.profile.bundles`；插件行由本包自带的 `cordis.patch.yml` 提供，不需要手改 profile 的 patch 文件。
 

@@ -52,8 +52,8 @@ test('declares the services the routes cannot work without', () => {
 })
 
 test('serves top-level routes, clear of the core /api namespace', () => {
-  assert.equal(ROUTE, '/plugin-mode-cycle/set')
-  assert.equal(HEALTH_ROUTE, '/plugin-mode-cycle/health')
+  assert.equal(ROUTE, '/mode-cycle/set')
+  assert.equal(HEALTH_ROUTE, '/mode-cycle/health')
   assert.equal(ROUTE.startsWith('/api/'), false)
   assert.equal(HEALTH_ROUTE.startsWith('/api/'), false)
 })
@@ -114,10 +114,10 @@ test('a missing or non-boolean active is refused', () => {
 })
 
 test('a probe id is read from the query string', () => {
-  assert.equal(sessionIdOf('/plugin-mode-cycle/health?sessionId=s1'), 's1')
-  assert.equal(sessionIdOf('/plugin-mode-cycle/health?a=1&sessionId=s1&b=2'), 's1')
-  assert.equal(sessionIdOf('/plugin-mode-cycle/health?sessionId='), undefined)
-  assert.equal(sessionIdOf('/plugin-mode-cycle/health'), undefined)
+  assert.equal(sessionIdOf('/mode-cycle/health?sessionId=s1'), 's1')
+  assert.equal(sessionIdOf('/mode-cycle/health?a=1&sessionId=s1&b=2'), 's1')
+  assert.equal(sessionIdOf('/mode-cycle/health?sessionId='), undefined)
+  assert.equal(sessionIdOf('/mode-cycle/health'), undefined)
   assert.equal(sessionIdOf(undefined), undefined)
 })
 

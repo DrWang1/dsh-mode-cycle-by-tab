@@ -1,5 +1,5 @@
 /**
- * dsh-plugin-mode-cycle — Host half.
+ * dsh-mode-cycle — Host half.
  *
  * The Client half asks this route for a mode, and this half switches it without
  * leaving a command row in the transcript.
@@ -41,10 +41,10 @@
 export const inject = ['webServer', 'agents', 'commands']
 
 /** Exact route the Client half POSTs a switch to; top-level, clear of `/api/*`. */
-export const ROUTE = '/plugin-mode-cycle/set'
+export const ROUTE = '/mode-cycle/set'
 
 /** Exact route that reports what resolved; used to diagnose a dead switch. */
-export const HEALTH_ROUTE = '/plugin-mode-cycle/health'
+export const HEALTH_ROUTE = '/mode-cycle/health'
 
 /** The command whose handler performs the switch. */
 export const PLAN_COMMAND = 'plan'

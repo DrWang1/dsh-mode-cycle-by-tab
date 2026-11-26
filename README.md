@@ -1,4 +1,4 @@
-# dsh-plugin-mode-cycle
+# dsh-mode-cycle
 
 **Tab 正向循环、Shift+Tab 反向循环切换输入框模式（普通 ↔ 计划）** —— 对齐 opencode 的 `agent_cycle` / `agent_cycle_reverse`，切换**不写命令行记录**。
 
@@ -35,7 +35,7 @@ opencode 官方 keybinds 的定义（`https://opencode.ai/docs/keybinds/`）：
 ```
 浏览器 (client.js)                       宿主 (index.js)
   Tab / Shift+Tab
-      └─ POST /plugin-mode-cycle/set ──► 校验 → ctx.agents.get(sessionId)
+      └─ POST /mode-cycle/set ──► 校验 → ctx.agents.get(sessionId)
              { sessionId, active }              └─ ctx.commands.find(agent, 'plan').handler({
       ◄──── 200 { active, kind, text } ─────────     commandId, agent, rawInput, attachments: [], signal })
                                                     └─ 官方处理器内部：set(agent, …) → 写 plan/mode 事件
@@ -47,7 +47,7 @@ opencode 官方 keybinds 的定义（`https://opencode.ai/docs/keybinds/`）：
 
 ### 走过的弯路（v0.2.0 完全失效的原因，值得留档）
 
-v0.2.0 试的是「按 `dsh-plan-mode` README 的说法直接驱动 `ctx.planMode`」，于是声明了 `inject: ['webServer', 'agents', 'planMode']`。结果**插件彻底不激活**：客户端模块照常出现在模块图里（那一项来自包的 `dsh.client` 清单），但宿主路由从未注册，`GET /plugin-mode-cycle/set` 永远 404，Tab 被吞而毫无反应。
+v0.2.0 试的是「按 `dsh-plan-mode` README 的说法直接驱动 `ctx.planMode`」，于是声明了 `inject: ['webServer', 'agents', 'planMode']`。结果**插件彻底不激活**：客户端模块照常出现在模块图里（那一项来自包的 `dsh.client` 清单），但宿主路由从未注册，`GET /mode-cycle/set` 永远 404，Tab 被吞而毫无反应。
 
 根因是 cordis 的作用域规则：`dsh-plan-mode` 的 `lib/index.js` 以
 
@@ -72,7 +72,7 @@ export { …, PlanModeController as default, … }
 
 ## 协议（本插件自有路由）
 
-### `POST /plugin-mode-cycle/set`
+### `POST /mode-cycle/set`
 
 `content-type: application/json`，body `{ "sessionId": string, "active": boolean }`。
 
@@ -85,12 +85,12 @@ export { …, PlanModeController as default, … }
 | `413` | body 超过 1 KiB |
 | `500` | 处理器抛错（已 `ctx.logger.warn`，不泄露堆栈） |
 
-### `GET /plugin-mode-cycle/health`
+### `GET /mode-cycle/health`
 
 报告解析结果，用于诊断「Tab 没反应」。可带 `?sessionId=<id>` 额外探测该会话的 `/plan` 命令是否可解析：
 
 ```sh
-curl -s 'http://127.0.0.1:<port>/plugin-mode-cycle/health?sessionId=<session-id>'
+curl -s 'http://127.0.0.1:<port>/mode-cycle/health?sessionId=<session-id>'
 # {"ok":true,"services":{"webServer":true,"agents":true,"commands":true},"planCommand":true}
 ```
 
@@ -102,7 +102,7 @@ curl -s 'http://127.0.0.1:<port>/plugin-mode-cycle/health?sessionId=<session-id>
 
 ```sh
 lsof -nP -iTCP -sTCP:LISTEN | grep -i electron     # 找监听端口
-curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:<port>/plugin-mode-cycle/health   # 404 = 宿主半边未激活
+curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:<port>/mode-cycle/health   # 404 = 宿主半边未激活
 curl -sN -m 5 http://127.0.0.1:<port>/plugins/events | grep -o '"id":"[^"]*"'               # 客户端模块图
 ```
 
@@ -131,24 +131,23 @@ curl -sN -m 5 http://127.0.0.1:<port>/plugins/events | grep -o '"id":"[^"]*"'   
 
 ## 安装 / 回滚
 
+> **从 0.3.x 升级**：包名已由 `dsh-plugin-mode-cycle` 改为 `dsh-mode-cycle`（路由同步改为 `/mode-cycle/*`）。旧名的安装行不会被新包覆盖——先 `dsh plugin --profile desktop remove dsh-plugin-mode-cycle`，再按下面任一方式装 `dsh-mode-cycle`；否则 profile 里会同时存在两行、Tab 会各切一次。GitHub 旧地址会自动跳转到新仓库。
+
 `dsh plugin` 的参数直接转发给 pnpm，因此支持任意 pnpm 来源。CLI 的名字随分发方不同（纯 CLI 是 `dsh`，桌面应用会各起一个名字，如 `yxt`、`yxt-test`），profile 名通常是 `desktop`：
 
 ```sh
 # 本地目录（开发时用，装成 link:，改动重启即生效）
-dsh plugin --profile desktop add /path/to/dsh-plugin-mode-cycle
+dsh plugin --profile desktop add /path/to/dsh-mode-cycle
 
 # GitHub（可指名 tag）
-dsh plugin --profile desktop add github:DrWang1/dsh-plugin-mode-cycle
-dsh plugin --profile desktop add github:DrWang1/dsh-plugin-mode-cycle#v0.3.0
+dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle
+dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle#v0.3.0
 
-# npm（已发布到 npm）
-dsh plugin --profile desktop add dsh-plugin-mode-cycle
-
-# GitHub Release 预构建包（插件市场同源；升级走新 tag）
-dsh plugin --profile desktop add https://github.com/DrWang1/dsh-plugin-mode-cycle/releases/latest/download/dsh-plugin-mode-cycle.tgz
+# npm 未发布：只走 GitHub Release 预构建包与插件市场（插件市场同源；升级走新 tag）
+dsh plugin --profile desktop add https://github.com/DrWang1/dsh-mode-cycle/releases/latest/download/dsh-mode-cycle.tgz
 
 # 回滚
-dsh plugin --profile desktop remove dsh-plugin-mode-cycle
+dsh plugin --profile desktop remove dsh-mode-cycle
 ```
 
 插件市场（设置 → 插件 → 插件市场）里搜 `mode-cycle` 也能装，条目与上面这个 Release 包同源。

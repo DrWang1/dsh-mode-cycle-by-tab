@@ -1,5 +1,5 @@
 /**
- * dsh-plugin-mode-cycle — Client half.
+ * dsh-mode-cycle — Client half.
  *
  * Tab cycles composer modes forward, Shift+Tab cycles them backward: the
  * gesture opencode binds as `agent_cycle` / `agent_cycle_reverse`.
@@ -23,7 +23,7 @@
  *    `data-trigger-menu`, and the highlight rides `aria-activedescendant`.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-plugin-mode-cycle',
+  id: 'dsh-mode-cycle',
   factory(require) {
     const React = require('react')
 
@@ -57,7 +57,7 @@ window.__ModuleLoader__.load({
      * Exact route the Host half serves. Registered at a top-level path so it
      * cannot collide with the core `/api/*` namespace.
      */
-    const ROUTE = '/plugin-mode-cycle/set'
+    const ROUTE = '/mode-cycle/set'
 
     /**
      * The plan state arrives as a slot prop and a document-level key listener

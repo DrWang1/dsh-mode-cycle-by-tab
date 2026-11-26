@@ -1,6 +1,6 @@
 {
-  "name": "dsh-mode-cycle",
-  "version": "0.4.0",
+  "name": "dsh-mode-cycle-by-tab",
+  "version": "0.5.0",
   "description": "Tab and Shift+Tab cycle composer modes (normal <-> plan) in the DSH Web composer, matching opencode's agent_cycle — switching through the official /plan handler directly, so no command row reaches the transcript.",
   "type": "module",
   "exports": {
@@ -35,11 +35,11 @@
   "author": "DrWang1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DrWang1/dsh-mode-cycle.git"
+    "url": "git+https://github.com/DrWang1/dsh-mode-cycle-by-tab.git"
   },
-  "homepage": "https://github.com/DrWang1/dsh-mode-cycle#readme",
+  "homepage": "https://github.com/DrWang1/dsh-mode-cycle-by-tab#readme",
   "bugs": {
-    "url": "https://github.com/DrWang1/dsh-mode-cycle/issues"
+    "url": "https://github.com/DrWang1/dsh-mode-cycle-by-tab/issues"
   },
   "keywords": [
     "dsh",

@@ -1,4 +1,4 @@
-# dsh-mode-cycle
+# dsh-mode-cycle-by-tab
 
 **Tab 正向循环、Shift+Tab 反向循环切换输入框模式（普通 ↔ 计划）** —— 对齐 opencode 的 `agent_cycle` / `agent_cycle_reverse`，切换**不写命令行记录**。
 
@@ -131,26 +131,26 @@ curl -sN -m 5 http://127.0.0.1:<port>/plugins/events | grep -o '"id":"[^"]*"'   
 
 ## 安装 / 回滚
 
-> **从 0.3.x 升级**：包名已由 `dsh-plugin-mode-cycle` 改为 `dsh-mode-cycle`（路由同步改为 `/mode-cycle/*`）。旧名的安装行不会被新包覆盖——先 `dsh plugin --profile desktop remove dsh-plugin-mode-cycle`，再按下面任一方式装 `dsh-mode-cycle`；否则 profile 里会同时存在两行、Tab 会各切一次。GitHub 旧地址会自动跳转到新仓库。
+> **改名升级说明**：包名走过 `dsh-plugin-mode-cycle`（0.3.x）→ `dsh-mode-cycle`（0.4.0）→ `dsh-mode-cycle-by-tab`。装过其中任一个旧名的，先 `dsh plugin --profile desktop remove <旧名>`，再按下面任一方式装 `dsh-mode-cycle-by-tab`；否则 profile 里会同时存在多行、Tab 会各切一次。路由固定为 `/mode-cycle/*`，不随包名变化；GitHub 旧地址自动跳转到新仓库。
 
 `dsh plugin` 的参数直接转发给 pnpm，因此支持任意 pnpm 来源。CLI 的名字随分发方不同（纯 CLI 是 `dsh`，桌面应用会各起一个名字，如 `yxt`、`yxt-test`），profile 名通常是 `desktop`：
 
 ```sh
 # 本地目录（开发时用，装成 link:，改动重启即生效）
-dsh plugin --profile desktop add /path/to/dsh-mode-cycle
+dsh plugin --profile desktop add /path/to/dsh-mode-cycle-by-tab
 
 # GitHub（可指名 tag）
-dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle
-dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle#v0.3.0
+dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle-by-tab
+dsh plugin --profile desktop add github:DrWang1/dsh-mode-cycle-by-tab#v0.3.0
 
 # npm 未发布：只走 GitHub Release 预构建包与插件市场（插件市场同源；升级走新 tag）
-dsh plugin --profile desktop add https://github.com/DrWang1/dsh-mode-cycle/releases/latest/download/dsh-mode-cycle.tgz
+dsh plugin --profile desktop add https://github.com/DrWang1/dsh-mode-cycle-by-tab/releases/latest/download/dsh-mode-cycle-by-tab.tgz
 
 # 回滚
-dsh plugin --profile desktop remove dsh-mode-cycle
+dsh plugin --profile desktop remove dsh-mode-cycle-by-tab
 ```
 
-插件市场（设置 → 插件 → 插件市场）里搜 `mode-cycle` 也能装，条目与上面这个 Release 包同源。
+插件市场（设置 → 插件 → 插件市场）里搜 `mode-cycle-by-tab` 也能装，条目与上面这个 Release 包同源。
 
 该命令会把包装进 profile 的 `node_modules` 并追加到 `dsh.profile.bundles`；插件行由本包自带的 `cordis.patch.yml` 提供，不需要手改 profile 的 patch 文件。
 

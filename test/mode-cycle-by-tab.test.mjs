@@ -1,5 +1,5 @@
 /**
- * Logic tests for dsh-mode-cycle.
+ * Logic tests for dsh-mode-cycle-by-tab.
  *
  * The plugin registers through `window.__ModuleLoader__`, and its arbitration
  * rules are pure functions, so a stub loader captures the factory and the
@@ -28,7 +28,7 @@ vm.createContext(sandbox)
 vm.runInContext(source, sandbox, { filename: 'client.js' })
 
 assert.ok(captured, 'client.js must register through window.__ModuleLoader__.load')
-assert.equal(captured.id, 'dsh-mode-cycle', 'module id must equal the package name')
+assert.equal(captured.id, 'dsh-mode-cycle-by-tab', 'module id must equal the package name')
 
 /** Minimal React stand-in: the pure helpers never render. */
 const require = (name) => {

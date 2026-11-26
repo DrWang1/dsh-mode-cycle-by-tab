@@ -1,5 +1,5 @@
 /**
- * dsh-mode-cycle — Client half.
+ * dsh-mode-cycle-by-tab — Client half.
  *
  * Tab cycles composer modes forward, Shift+Tab cycles them backward: the
  * gesture opencode binds as `agent_cycle` / `agent_cycle_reverse`.
@@ -23,7 +23,7 @@
  *    `data-trigger-menu`, and the highlight rides `aria-activedescendant`.
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-mode-cycle',
+  id: 'dsh-mode-cycle-by-tab',
   factory(require) {
     const React = require('react')
 

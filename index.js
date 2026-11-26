@@ -1,5 +1,5 @@
 /**
- * dsh-mode-cycle — Host half.
+ * dsh-mode-cycle-by-tab — Host half.
  *
  * The Client half asks this route for a mode, and this half switches it without
  * leaving a command row in the transcript.
